@@ -35,14 +35,35 @@ namespace TechJobTests
             Assert.IsFalse(testjob1.Id.Equals(testjob2.Id));
         }
 
-
+        [TestMethod]
+        public void TestToStringBlankLines()
+        {
+            Job stringtest1 = new Job("Product tester", new Employer("ACME"), new Location("Desert"), new PositionType("Quality control"), new CoreCompetency("Persistence"));
+            Assert.IsTrue(stringtest1.ToString().StartsWith("\n") && stringtest1.ToString().EndsWith("\n"));
+            
+        }
 
         [TestMethod]
-        public void TestForBlankLines()
+        public void TestToStringFormatting()
         {
-            Job job2 = new Job("Web Developer", new Employer("LaunchCode"), new Location("St.Louis"), new PositionType("Front-end Developer"), new CoreCompetency("JavaScript"));
-            Assert.IsTrue(job2.ToString().StartsWith("\n") && job2.ToString().EndsWith("\n"));
+            Job stringtest2 = new Job("Product tester", new Employer("ACME"), new Location("Desert"), new PositionType("Quality control"), new CoreCompetency("Persistence"));
+            Assert.IsTrue(stringtest2.ToString() == "\n ID: " + stringtest2.Id + "\n Name: " + stringtest2.Name + "\n Employer: " + stringtest2.EmployerName.Value + "\n Location: " + stringtest2.EmployerLocation.Value + "\n Position Type: " + stringtest2.JobType.Value + "\n Core Competency: " + stringtest2.JobCoreCompetency.Value + "\n");
+        }
 
+        [TestMethod]
+        public void TestToStringEmptyFields()
+        {
+            Job stringtest3 = new Job("Product tester", new Employer("ACME"), new Location("Desert"), new PositionType("Quality control"), new CoreCompetency(""));
+
+            Assert.IsTrue(stringtest3.ToString() == "\n ID: " + stringtest3.Id + "\n Name: " + stringtest3.Name + "\n Employer: " + stringtest3.EmployerName.Value + "\n Location: " + stringtest3.EmployerLocation.Value + "\n Position Type: " + stringtest3.JobType.Value + "\n Core Competency: " + "Data not available" + "\n");
+        }
+
+        [TestMethod]
+        public void TestToStringIdOnly()
+        {
+            Job stringtest4 = new Job("", new Employer(""), new Location(""), new PositionType(""), new CoreCompetency(""));
+
+            Assert.IsTrue(stringtest4.ToString() == "OOPS! This job does not seem to exist.");
         }
     }
 }
